@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-paper text-ink-900 antialiased;
+}
+
+.font-display {
+  letter-spacing: -0.01em;
+}
+
+::selection {
+  @apply bg-brand-300/60;
+}
