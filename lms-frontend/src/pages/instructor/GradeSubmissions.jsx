@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext.jsx';
-import { api } from '../../api/client.js';
+import { api, API_URL } from '../../api/client.js';
 import { Card, Badge, Button, Input, Spinner, Alert } from '../../components/ui.jsx';
 
 export default function GradeSubmissions() {
@@ -91,7 +91,7 @@ export default function GradeSubmissions() {
                   const top = (window.innerHeight - height) / 2;
 
                   // URL constructor automatically paths missing slashes cleanly
-                  const targetUrl = new URL(s.fileUrl, 'http://localhost:3000').href;
+                  const targetUrl = new URL(s.fileUrl, API_URL).href;
 
                   window.open(
                     targetUrl,

@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:3000/api';
+const configuredApiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+export const API_URL = configuredApiUrl.replace(/\/+$/, '').replace(/\/api$/, '');
+const BASE_URL = `${API_URL}/api`;
 
 async function request(path, { method = 'GET', body, token } = {}) {
   const headers = { 'Content-Type': 'application/json' };

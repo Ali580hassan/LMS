@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
-import { api } from '../api/client.js';
+import { api, API_URL } from '../api/client.js';
 import { Button, Badge } from './ui.jsx';
 import { IoPerson, IoNotificationsOutline } from "react-icons/io5";
 import { io } from 'socket.io-client';
@@ -105,7 +105,7 @@ export default function Navbar() {
 
     const userId = Number(rawUserId);
 
-    const socket = io('http://localhost:3000', {
+    const socket = io(API_URL, {
       query: { userId: userId },
       auth: { token: token },
       transports: ['websocket'],
@@ -341,8 +341,8 @@ export default function Navbar() {
                               }
                             }}
                             className={`flex cursor-pointer items-start justify-between gap-2 rounded-xl p-3 text-xs transition ${item.isRead
-                                ? 'bg-ink-900/5'
-                                : 'bg-brand-500/10'
+                              ? 'bg-ink-900/5'
+                              : 'bg-brand-500/10'
                               }`}
                           >
                             <div className="flex-1">

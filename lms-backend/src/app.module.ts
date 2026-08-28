@@ -32,15 +32,13 @@ import { CacheModule } from '@nestjs/cache-manager';
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         type: 'postgres',
-        host: config.get<string>('DB_HOST'),
-        port: config.get<number>('DB_PORT'),
-        username: config.get<string>('DB_USERNAME'),
-        password: config.get<string>('DB_PASSWORD'),
-        database: config.get<string>('DB_NAME'),
+        url: config.get<string>('DATABASE_URL'),
         autoLoadEntities: true,
         synchronize: true,
+        ssl: true,
       }),
     }),
+
     UsersModule,
     CoursesModule,
     EnrollmentsModule,
@@ -61,11 +59,18 @@ import { CacheModule } from '@nestjs/cache-manager';
 export class AppModule implements OnModuleInit {
   constructor(private dataSource: DataSource) {}
 
+  // onModuleInit() {
+  //   if (this.dataSource.isInitialized) {
+  //     console.log('database connected', this.dataSource.options.database);
+  //   } else {
+  //     console.log('connection error');
+  //   }
+  // }
   onModuleInit() {
     if (this.dataSource.isInitialized) {
-      console.log('database connected', this.dataSource.options.database);
+      console.log('Database connected successfully');
     } else {
-      console.log('connection error');
+      console.log('Connection error');
     }
   }
 }

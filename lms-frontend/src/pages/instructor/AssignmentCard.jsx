@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Card, Badge, Button, Textarea, Alert, Spinner } from '../../components/ui.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
-import { api } from '../../api/client.js';
+import { api, API_URL } from '../../api/client.js';
 import { Link } from 'react-router-dom';
 
 export default function AssignmentCard({ courseId, assignment, isOwner, isStudentEnrolled, onEdit, onDelete, onSubmit }) {
@@ -212,7 +212,7 @@ export default function AssignmentCard({ courseId, assignment, isOwner, isStuden
                           className="text-sm"
                           onClick={() =>
                             window.open(
-                              `http://localhost:3000${mySubmission.fileUrl}`,
+                              `${API_URL}${mySubmission.fileUrl}`,
                               '_blank',
                               'noopener,noreferrer,width=900,height=700',
                             )

@@ -22,7 +22,11 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: 'http://localhost:5173', // frontend ka exact origin
+    origin: [
+      'http://localhost:5173', // local development
+      ...(process.env.ORIGIN ? [process.env.ORIGIN] : []),
+    ],
+    // frontend ka exact origin
     credentials: true,
   });
 
