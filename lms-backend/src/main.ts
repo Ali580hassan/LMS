@@ -4,13 +4,16 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import compression = require('compression');
+
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
   app.use(compression());
-  app.setGlobalPrefix('api');
+
   app.setGlobalPrefix('api', {
-    exclude: ['uploads/(.*)'], // uploads folder ko prefix se bahar rakho
+    exclude: ['uploads/{*path}'],
   });
+
   app.useStaticAssets(join(__dirname, '..', 'uploads'), {
     prefix: '/uploads/',
   });
@@ -22,16 +25,15 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: [
-      'http://localhost:5173', // local development
-      ...(process.env.ORIGIN ? [process.env.ORIGIN] : []),
-    ],
-    // frontend ka exact origin
+    origin: process.env.ORIGIN,
     credentials: true,
   });
 
-  await app.listen(process.env.PORT ?? 3000);
+  const port = Number(process.env.PORT) || 3000;
+
   await app.listen(port, '0.0.0.0');
+
   console.log(`Server running on port ${port}`);
 }
+
 bootstrap();
