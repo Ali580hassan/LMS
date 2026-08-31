@@ -25,7 +25,21 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: process.env.ORIGIN,
+    origin: (origin, callback) => {
+      const allowed = [
+        'https://lms-ali-hassan3.vercel.app',
+        'http://localhost:5173',
+      ];
+      if (
+        !origin ||
+        allowed.includes(origin) ||
+        /\.vercel\.app$/.test(origin)
+      ) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
   });
 
